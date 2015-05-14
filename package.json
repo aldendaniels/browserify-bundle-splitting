@@ -1,0 +1,19 @@
+{
+  "name": "browserify-split-modules",
+  "version": "1.0.0",
+  "description": "Demonstration of issue attempting to split out vendor modules w/ browserify",
+  "main": "builder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alden Daniels",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^10.1.3",
+    "watchify": "^3.2.1",
+    "minimatch": "^2.0.7"
+  },
+  "dependencies": {
+    "react": "^0.13.3"
+  }
+}
