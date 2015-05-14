@@ -49,10 +49,11 @@ function main() {
     // Create vendor bundle.
     var vendorOutputName = 'vendor.bundle.js';
     var vendorBundle = createBundle(baseDir, vendorOutputName);
-    mainBundle.on('file', function(file) {
+    mainBundle.on('file', function(file, id) {
         if (minimatch(file, '**/node_modules/**')) {
             mainBundle.external(file);
-            vendorBundle.require(file);
+            mainBundle.external(id)
+            vendorBundle.require(file, {expose: id});
         }
     });
 
