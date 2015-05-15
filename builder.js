@@ -55,9 +55,9 @@ function main() {
     mainBundle.plugin(pathmod());
     mainBundle.on('pathmodify:resolved', function (data) {
       // You can test `data.rec.id` here, as in `require('id')` or resolved
-      // pathname in `rec.file`.
+      // pathname in `data.file`.
       if (! /^[\/.]/.test(data.rec.id)) {
-      // if (minimatch(rec.file, '**/node_modules/**')) {
+      // if (minimatch(data.file, '**/node_modules/**')) {
 
         mainBundle.external(data.file);
         vendorBundle.require(data.file, {expose: data.rec.id});
