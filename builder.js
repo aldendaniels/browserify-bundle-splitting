@@ -4,6 +4,8 @@ var path        = require('path');
 var fs          = require('fs');
 var minimatch   = require('minimatch');
 
+var pathmod = require('pathmodify');
+
 function writeBundle(bundle, outputName, callback) {
     outputName = path.join('build', outputName);
     console.log('Start bundling ' + outputName);
@@ -49,12 +51,17 @@ function main() {
     // Create vendor bundle.
     var vendorOutputName = 'vendor.bundle.js';
     var vendorBundle = createBundle(baseDir, vendorOutputName);
-    mainBundle.on('file', function(file, id) {
-        if (minimatch(file, '**/node_modules/**')) {
-            mainBundle.external(file);
-            mainBundle.external(id)
-            vendorBundle.require(file, {expose: id});
-        }
+
+    mainBundle.plugin(pathmod());
+    mainBundle.on('pathmodify:resolved', function (data) {
+      // You can test `data.rec.id` here, as in `require('id')` or resolved
+      // pathname in `rec.file`.
+      if (! /^[\/.]/.test(data.rec.id)) {
+      // if (minimatch(rec.file, '**/node_modules/**')) {
+
+        mainBundle.external(data.file);
+        vendorBundle.require(data.file, {expose: data.rec.id});
+      }
     });
 
     // Write initial bundle.
