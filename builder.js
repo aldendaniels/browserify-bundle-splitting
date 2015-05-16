@@ -21,7 +21,7 @@ function writeBundle(bundle, outputName, callback) {
 function createBundle(baseDir, outputName) {
     // Create bundler.
     var bundle = watchify(browserify({
-        cache: {}, packageCache: {}, fullPaths: true, // Required watchify args
+        cache: {}, packageCache: {}, // Required watchify args
         debug: true,
         entries: [],
         basedir: path.join(__dirname, 'src')
