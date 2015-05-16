@@ -3,8 +3,7 @@ var watchify    = require('watchify');
 var path        = require('path');
 var fs          = require('fs');
 var minimatch   = require('minimatch');
-
-var pathmod = require('pathmodify');
+var pathmodify  = require('pathmodify');
 
 function writeBundle(bundle, outputName, callback) {
     outputName = path.join('build', outputName);
@@ -52,16 +51,15 @@ function main() {
     var vendorOutputName = 'vendor.bundle.js';
     var vendorBundle = createBundle(baseDir, vendorOutputName);
 
-    mainBundle.plugin(pathmod());
+    // Exclude contents of `node_modules`.
+    mainBundle.plugin(pathmodify());
     mainBundle.on('pathmodify:resolved', function (data) {
-      // You can test `data.rec.id` here, as in `require('id')` or resolved
-      // pathname in `data.file`.
-      if (! /^[\/.]/.test(data.rec.id)) {
-      // if (minimatch(data.file, '**/node_modules/**')) {
-
-        mainBundle.external(data.file);
-        vendorBundle.require(data.file, {expose: data.rec.id});
-      }
+        var requireId = data.rec.id; // As in `require('id')`
+        var filePath  = data.file;   // The absolute path to the required file
+        if (minimatch(filePath, '**/node_modules/**')) {
+            mainBundle.external(filePath);
+            vendorBundle.require(filePath, {expose: requireId});
+        }
     });
 
     // Write initial bundle.
