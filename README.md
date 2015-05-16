@@ -1,9 +1,8 @@
 # Browserify Split Vendor Modules
 
-Ths demonstrates an approach to using Browserify to split out `node_modules` into a separate `vendor` bundle. The repo exists to reproduce what appears to be an issue with Browserify's API keeping `require()` calls from resolving across bundles.
+Ths demonstrates an approach to splitting out `node_modules` into a separate `vendor` bundle. This approach is quite generic and could be used to split up browserify bundles in other ways as well. Please note that this is sample code - not a library. If you encounter problems using this pattern in production, please open an issue.
 
-###WARNING
-This is a proof-of-problem, not yet a proof-of-concept. Don't try this. It won't work.
+Huge thanks to [@jjm](https://github.com/jmm) for his help designing this solution as well as for the [pathmodify](https://github.com/jmm/pathmodify) plugin this depends on.
 
 ###Usage
  1. `npm install`
@@ -11,6 +10,3 @@ This is a proof-of-problem, not yet a proof-of-concept. Don't try this. It won't
  3. `node builder.js`
  4. `cd build/`
  5. `python -m SimpleHTTPServer <port>` (or your webserver of choice)
-
-###Problem
-Require calls in `index.bundle.js` sporadically fail to locate the modules in `vendor.bundle.js`. In this example the `require('react')` in `index.js` works while the same call in `component.js` fails.
