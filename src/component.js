@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 
 var HelloMessage = React.createClass({displayName: "HelloMessage",
   render: function() {
