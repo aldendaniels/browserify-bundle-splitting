@@ -21,8 +21,7 @@ function writeBundle(bundle, outputName, callback) {
 function createBundle(baseDir, outputName) {
   // Create bundler.
   var bundle = watchify(browserify({
-    cache: {},
-    packageCache: {}, // Required watchify args
+    cache: {}, packageCache: {}, // Required watchify args
     debug: true,
     entries: [],
     basedir: path.join(__dirname, 'src')
@@ -60,9 +59,7 @@ function main() {
     if (minimatch(filePath, '**/node_modules/**')) {
       mainBundle.external(filePath);
       mainBundle.external(requireId); // Watchify breaks without this.
-      vendorBundle.require(filePath, {
-        expose: requireId
-      });
+      vendorBundle.require(filePath, { expose: requireId });
     }
   });
 
