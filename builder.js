@@ -58,6 +58,7 @@ function main() {
         var filePath  = data.file;   // The absolute path to the required file
         if (minimatch(filePath, '**/node_modules/**')) {
             mainBundle.external(filePath);
+            mainBundle.external(requireId); // Watchify breaks without this.
             vendorBundle.require(filePath, {expose: requireId});
         }
     });
