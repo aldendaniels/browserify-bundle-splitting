@@ -1,6 +1,6 @@
-# Browserify Split Vendor Modules
+# Browserify Bundle Splitting
 
-Ths demonstrates an approach to splitting out `node_modules` into a separate `vendor` bundle. This approach is quite generic and could be used to split up browserify bundles in other ways as well. Please note that this is sample code - not a library. If you encounter problems using this pattern in production, please open an issue.
+This demonstrates an approach to splitting code into multiple bundles using Browserify. This example splits out `node_modules` into a separate `vendor` bundle. The approach is generic, however, and can be used to split code using arbitrary criteria. If you encounter problems using this pattern in production, please open an issue.
 
 The bundle splitting logic is contained in `builder.js`.
 
